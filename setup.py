@@ -1,24 +1,27 @@
-from setuptools import find_packages, setup
+from setuptools import find_packages,setup
 from typing import List
 
-Hypen_E_dot = "-e ."
-def get_requirements(file_name:str)->List[str]:  # This function is for reading text from Requirments.txt
-    reqiurements=[]
-    with open(file_name) as object:
-        reqiurements=object.readline()   # It make it read all lines
-        reqiurements=reqiurements.split("\n")
+HYPEN_E_DOT='-e .'
+def get_requirements(file_path:str)->List[str]:
+    '''
+    this function will return the list of requirements
+    '''
+    requirements=[]
+    with open(file_path) as file_obj:
+        requirements=file_obj.readlines()
+        requirements=[req.replace("\n","") for req in requirements]
 
-        if Hypen_E_dot in reqiurements:
-            reqiurements.remove(Hypen_E_dot)   #As -e . should not come into this list Get_requirements is Extracting
-    return reqiurements
-
+        if HYPEN_E_DOT in requirements:
+            requirements.remove(HYPEN_E_DOT)
+    
+    return requirements
 
 setup(
     name='ML Project',
     version='0.0.1',
     description='An end to end machine learning project',
     author='Hammad Ali Tahir',
-    author_email='hammadalitahir8@gmail.com ',
+    author_email='hammadalitahir8@gmail.com',
     packages=find_packages(),
     install_requires=get_requirements('Requirements.txt')
 )
