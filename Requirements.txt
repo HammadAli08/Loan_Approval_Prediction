@@ -1,9 +1,8 @@
 pandas
 matplotlib
 scikit-learn
+dill
 numpy
 seaborn
-iblearn
-catboost
-xgboost
--e .        # to trigger setup.py file when we write something here
+imblearn
+-e .          # to trigger setup.py file when we write something here
