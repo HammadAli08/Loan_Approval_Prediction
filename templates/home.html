@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Loan Prediction App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            color: white;
+        }
+        h1 {
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+        .btn-custom {
+            background: linear-gradient(to right, #ff512f, #dd2476);
+            color: white;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+        .btn-custom:hover {
+            transform: scale(1.1);
+            color: #fff;
+        }
+    </style>
+</head>
+<body class="d-flex justify-content-center align-items-center vh-100">
+    <div class="text-center">
+        <h1 class="mb-4">🏦 Loan Approval Prediction</h1>
+        <p class="lead mb-4">Enter applicant details to check loan eligibility.</p>
+        <a href="{{ url_for('predict_datapoint') }}" class="btn btn-custom btn-lg shadow-lg">Start Prediction</a>
+    </div>
+</body>
+</html>
