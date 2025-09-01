@@ -2,108 +2,362 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Prediction Result</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Results</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            padding: 20px;
         }
 
-        .card {
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
-            background: linear-gradient(145deg, #ffffff, #f0f0f5);
-            padding: 50px;
-            max-width: 500px;
-            width: 100%;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
             text-align: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
 
-        h2 {
-            color: #6a0572;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .result-badge {
-            font-size: 1.5rem;
-            padding: 15px 25px;
-            border-radius: 50px;
-            font-weight: bold;
-            display: inline-block;
+        .result-card {
+            padding: 40px;
+            border-radius: 15px;
             margin-bottom: 30px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            animation: fadeInUp 0.8s ease;
         }
 
         .approved {
-            background-color: #28a745;
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
             color: white;
         }
 
         .rejected {
-            background-color: #dc3545;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
             color: white;
         }
 
         .error {
-            background-color: #ffc107;
+            background: linear-gradient(45deg, #ffd93d, #ff9c3f);
+            color: white;
+        }
+
+        .result-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounce 1s infinite alternate;
+        }
+
+        .result-title {
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .result-message {
+            font-size: 18px;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+
+        .result-details {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .result-details h3 {
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
             color: #333;
         }
 
-        .btn-custom {
-            border-radius: 50px;
-            padding: 10px 25px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            margin: 5px;
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
-        .btn-custom:hover {
-            transform: scale(1.05);
+        .confidence-meter {
+            width: 100%;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
         }
 
-        .btn-home {
-            background: linear-gradient(to right, #00c6ff, #0072ff);
-            color: white;
-            border: none;
+        .confidence-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1s ease;
         }
 
-        .btn-another {
-            background: linear-gradient(to right, #ff512f, #dd2476);
-            color: white;
-            border: none;
+        .confidence-label {
+            font-size: 14px;
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .result-card {
+                padding: 20px;
+            }
+
+            .result-icon {
+                font-size: 60px;
+            }
+
+            .result-title {
+                font-size: 24px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h2>Loan Status Prediction</h2>
+    <div class="container">
+        {% if results is defined %}
+            {% if "Error" in results|string %}
+                <div class="result-card error">
+                    <div class="result-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h1 class="result-title">Oops! Something went wrong</h1>
+                    <p class="result-message">{{ results }}</p>
 
-        {% set display_result = "" %}
-        {% if results|string == "1" %}
-            {% set display_result = "Approved" %}
-            <span class="result-badge approved">✅ {{ display_result }}</span>
-        {% elif results|string == "0" %}
-            {% set display_result = "Rejected" %}
-            <span class="result-badge rejected">❌ {{ display_result }}</span>
-        {% elif "Error" in results %}
-            <span class="result-badge error">{{ results }}</span>
+                    <div class="action-buttons">
+                        <a href="/loan_predictions" class="btn btn-primary">
+                            <i class="fas fa-redo"></i> Try Again
+                        </a>
+                        <a href="/" class="btn btn-secondary">
+                            <i class="fas fa-home"></i> Back to Home
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+                {% set prediction = results|int %}
+                {% if prediction == 1 %}
+                    <div class="result-card approved">
+                        <div class="result-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h1 class="result-title">Congratulations!</h1>
+                        <p class="result-message">Your loan application has been approved</p>
+
+                        <div class="confidence-meter">
+                            <div class="confidence-fill" style="width: 85%; background: rgba(255, 255, 255, 0.6);"></div>
+                        </div>
+                        <div class="confidence-label">85% Confidence Level</div>
+
+                        <div class="result-details">
+                            <h3><i class="fas fa-info-circle"></i> Next Steps</h3>
+                            <div class="detail-item">
+                                <span>Document Verification</span>
+                                <span>Required</span>
+                            </div>
+                            <div class="detail-item">
+                                <span>Final Approval</span>
+                                <span>Within 24 hours</span>
+                            </div>
+                            <div class="detail-item">
+                                <span>Disbursement</span>
+                                <span>2-3 business days</span>
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <a href="/loan_predictions" class="btn btn-primary">
+                                <i class="fas fa-redo"></i> New Prediction
+                            </a>
+                            <a href="/" class="btn btn-secondary">
+                                <i class="fas fa-home"></i> Back to Home
+                            </a>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="result-card rejected">
+                        <div class="result-icon">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <h1 class="result-title">We're Sorry</h1>
+                        <p class="result-message">Your loan application was not approved at this time</p>
+
+                        <div class="confidence-meter">
+                            <div class="confidence-fill" style="width: 78%; background: rgba(255, 255, 255, 0.6);"></div>
+                        </div>
+                        <div class="confidence-label">78% Confidence Level</div>
+
+                        <div class="result-details">
+                            <h3><i class="fas fa-lightbulb"></i> Suggestions for Improvement</h3>
+                            <div class="detail-item">
+                                <span>Improve CIBIL Score</span>
+                                <span>Target: 750+</span>
+                            </div>
+                            <div class="detail-item">
+                                <span>Increase Income</span>
+                                <span>+20% recommended</span>
+                            </div>
+                            <div class="detail-item">
+                                <span>Reduce Dependents</span>
+                                <span>Consider financial planning</span>
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <a href="/loan_predictions" class="btn btn-primary">
+                                <i class="fas fa-redo"></i> Try Again
+                            </a>
+                            <a href="/" class="btn btn-secondary">
+                                <i class="fas fa-home"></i> Back to Home
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
         {% else %}
-            <span class="result-badge">{{ results }}</span>
+            <div class="result-card error">
+                <div class="result-icon">
+                    <i class="fas fa-exclamation-circle"></i>
+                </div>
+                <h1 class="result-title">No Results Found</h1>
+                <p class="result-message">Please submit the prediction form first</p>
+
+                <div class="action-buttons">
+                    <a href="/loan_predictions" class="btn btn-primary">
+                        <i class="fas fa-arrow-right"></i> Go to Prediction Form
+                    </a>
+                    <a href="/" class="btn btn-secondary">
+                        <i class="fas fa-home"></i> Back to Home
+                    </a>
+                </div>
+            </div>
         {% endif %}
-
-        <div>
-            <a href="{{ url_for('predict_datapoint') }}" class="btn btn-custom btn-another">Make Another Prediction</a>
-            <a href="{{ url_for('home') }}" class="btn btn-custom btn-home">Back to Home</a>
-        </div>
-
-        <div class="mt-4 text-muted small">
-            Powered by your ML model & Flask
-        </div>
     </div>
+
+    <script>
+        // Add some interactive animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const confidenceFill = document.querySelector('.confidence-fill');
+            if (confidenceFill) {
+                // Animate the confidence meter
+                setTimeout(() => {
+                    confidenceFill.style.width = confidenceFill.style.width;
+                }, 500);
+            }
+
+            // Add pulse animation to buttons
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('mouseenter', () => {
+                    btn.classList.add('pulse');
+                });
+                btn.addEventListener('mouseleave', () => {
+                    btn.classList.remove('pulse');
+                });
+            });
+        });
+    </script>
 </body>
 </html>

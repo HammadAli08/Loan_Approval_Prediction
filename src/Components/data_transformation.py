@@ -31,12 +31,13 @@ class DataTransformation:
         Column names are assumed to be stripped of spaces already.
         """
         try:
-            numerical_columns = ['loan_id', ' no _of_dependents', ' income_annum', ' loan_amount',
-       ' loan_term', ' cibil_score', ' residential_assets_value',
-       ' commercial_assets_value', ' luxury_assets_value',
-       ' bank_asset_value']
+            numerical_columns = [
+                'loan_id', 'no_of_dependents', 'income_annum', 'loan_amount',
+                'loan_term', 'cibil_score', 'residential_assets_value',
+                'commercial_assets_value', 'luxury_assets_value', 'bank_asset_value'
+            ]
 
-            categorical_columns = [' education', ' self_employed']
+            categorical_columns = ['education', 'self_employed']
 
             # Numerical Pipeline
             num_pipeline = Pipeline(steps=[
