@@ -1,74 +1,66 @@
-# 🚀 Loan Approval Prediction 🏦✨
+# 💰 Loan Approval Prediction App  
 
-<p align="center">
-  <img src="https://media.giphy.com/media/xT9IglZzyhrlHX1Syk/giphy.gif" width="250" />
-</p>
-
-## 🌟 About the Project
-Tired of long manual loan approval processes?  
-This **Loan Approval Prediction System** uses **Machine Learning** to instantly predict whether a loan should be **Approved ✅** or **Rejected ❌**.  
-
-With an impressive **97% accuracy**, this project demonstrates how AI can streamline financial decision-making! 🎯  
+Predict whether a loan application will be approved or not using **Machine Learning** 🚀.  
+This project is deployed on **Azure Web App** and powered by a custom-trained model.  
 
 ---
 
-## 📊 Input Columns (What You Provide)
-To get the prediction, you’ll need to provide these details:
+## ✨ Demo Preview  
 
-| Column Name            | Description                                      |
-|------------------------|--------------------------------------------------|
-| `Gender`              | Male / Female 👨👩 |
-| `Married`             | Yes / No 💍 |
-| `Dependents`          | Number of dependents 👶 |
-| `Education`           | Graduate / Not Graduate 🎓 |
-| `Self_Employed`       | Yes / No 🏢 |
-| `ApplicantIncome`     | Monthly income of applicant 💵 |
-| `CoapplicantIncome`   | Monthly income of co-applicant 💵 |
-| `LoanAmount`          | Loan amount requested 💰 |
-| `Loan_Amount_Term`    | Duration of loan in months ⏳ |
-| `Credit_History`      | 1 (Good) / 0 (Bad) 📈📉 |
-| `Property_Area`       | Urban / Semiurban / Rural 🏙️🌆🌄 |
+> 🌍 Try it live here: [Loan Prediction App](https://your-azure-app-link)  
+
+### 🖼️ Screenshots  
+![App Screenshot](https://via.placeholder.com/900x450.png?text=Loan+Approval+Prediction+App)  
 
 ---
 
-## 🎯 Output (What You Get)
-After feeding the above data, the model will predict:
+## 📊 Dataset Overview  
 
-- **Loan_Status** →  
-  ✅ **Approved**  
-  ❌ **Rejected**  
+Our dataset contains detailed information about applicants to help predict loan approval.  
 
-<p align="center">
-  <img src="https://media.giphy.com/media/26AHONQ79FdWZhAI0/giphy.gif" width="300" />
-</p>
+### 🗂️ Features Used in the Model  
+
+| Column Name               | Data Type | Description |
+|---------------------------|-----------|-------------|
+| `loan_id`                 | int       | Unique loan identifier |
+| `no_of_dependents`        | int       | Number of dependents |
+| `income_annum`            | float     | Applicant’s annual income |
+| `loan_amount`             | float     | Total loan amount applied for |
+| `loan_term`               | float     | Duration of loan (months/years) |
+| `cibil_score`             | float     | Applicant’s CIBIL credit score |
+| `residential_assets_value`| float     | Value of residential assets |
+| `commercial_assets_value` | float     | Value of commercial assets |
+| `luxury_assets_value`     | float     | Value of luxury assets (car, jewelry, etc.) |
+| `bank_asset_value`        | float     | Total bank assets value |
+| `education`               | str       | Applicant’s education status |
+| `self_employed`           | str       | Whether applicant is self-employed (Yes/No) |
 
 ---
 
-## ⚡ Accuracy
-- Achieves a **97% prediction accuracy** 📈  
-- Trained on real-world loan applicant data 🗂️  
-- Optimized using feature engineering + ML pipelines 🛠️  
+## ⚙️ How It Works  
+
+1. 📝 User enters loan application details.  
+2. 🤖 Machine learning model analyzes the data.  
+3. ✅ Output: *Loan Approved* or ❌ *Loan Rejected*.  
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Tech Stack  
+
 - **Python** 🐍  
-- **Pandas / NumPy** for data handling  
-- **Scikit-Learn** for machine learning models  
-- **Matplotlib / Seaborn** for data visualization  
+- **Scikit-Learn** for ML  
+- **Flask** backend  
+- **Azure Web App** deployment  
+- **GitHub Actions** CI/CD  
 
 ---
 
-## 🚀 How to Run Locally
-```bash
-# Clone the repository
-git clone https://github.com/HammadAli08/Loan_Approval_Prediction.git
+## 🎬 Interactive Flow  
 
-# Navigate to the project folder
-cd Loan_Approval_Prediction
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the application
-python app.py
+```mermaid
+graph LR
+A[User Input] --> B[Flask API]
+B --> C[ML Model Prediction]
+C --> D{Approved?}
+D -->|Yes| E[✅ Loan Approved]
+D -->|No| F[❌ Loan Rejected]
