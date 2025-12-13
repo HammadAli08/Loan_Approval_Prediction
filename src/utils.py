@@ -20,18 +20,32 @@ def save_object(file_path, obj):
 
 # Model Evaluation function
 def evaluate_models(X_train, y_train, X_test, y_test, models):
-    report = {}
-    for name, model in models.items():
-        model.fit(X_train, y_train)
-        y_pred = model.predict(X_test)
-        score = accuracy_score(y_test, y_pred)
-        report[name] = score
-    return report
+    try:
+        report = {}
 
-# To get the best model score from the dictionary
+        for i in range(len(list(models))):
+            model = list(models.values())[i]
+            
+            # Train model directly without GridSearchCV for simplicity
+            model.fit(X_train, y_train)
+
+            y_train_pred = model.predict(X_train)
+            y_test_pred = model.predict(X_test)
+
+            train_model_score = accuracy_score(y_train, y_train_pred)
+            test_model_score = accuracy_score(y_test, y_test_pred)
+
+            report[list(models.keys())[i]] = test_model_score
+
+        return report
+
+    except Exception as e:
+        raise CustomException(e, sys)
+    
 def load_object(file_path):
     try:
         with open(file_path, "rb") as file_obj:
             return pickle.load(file_obj)
+
     except Exception as e:
         raise CustomException(e, sys)
