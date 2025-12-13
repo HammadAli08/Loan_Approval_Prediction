@@ -1,15 +1,9 @@
-# This will contain the code for reading the data from the source
-
-# This will contain the code for reading the data from the source
-
-
 import sys
 import os
 import pandas as pd
 from src.Exception import CustomException
 from src.Logger import logging
 from src.utils import load_object
-from dataclasses import dataclass
 
 
 class Predictpipeline:
@@ -19,9 +13,11 @@ class Predictpipeline:
     def predict(self, features):
         try:
             model_path = os.path.join("artifacts", "model.pkl")
-            preprocessor_path = os.path.join('artifacts', 'preprocessor.pkl')
+            preprocessor_path = os.path.join("artifacts", "preprocessor.pkl")
+            
             model = load_object(file_path=model_path)
             preprocessor = load_object(file_path=preprocessor_path)
+            
             data_scaled = preprocessor.transform(features)
             preds = model.predict(data_scaled)
             return preds
@@ -30,7 +26,7 @@ class Predictpipeline:
             raise CustomException(e, sys)
 
 
-class costum_data:
+class CustomData:
     def __init__(self,
                  loan_id: int,
                  no_of_dependents: int,
@@ -75,10 +71,8 @@ class costum_data:
                 "self_employed": [self.self_employed]
             }
             df = pd.DataFrame(custom_data_input_dict)
-            logging.info('Dataframe Gathered')
+            logging.info("Dataframe Gathered")
             return df
 
         except Exception as e:
             raise CustomException(e, sys)
-
-
